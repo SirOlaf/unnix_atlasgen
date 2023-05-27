@@ -31,6 +31,8 @@ type
 
 proc grabGitInfo(atPath: string): GitInfo =
   result.url = atPath.gitRemoteGetUrl("origin")
+  if result.url.endsWith(".git"):
+    result.url = result.url[0 ..< result.url.len() - ".git".len()]
   result.rev = atPath.gitRevParseHead()
   result.name = result.url.splitPath().tail
 
